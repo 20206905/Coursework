@@ -4,7 +4,7 @@
 
 # Steps
 1)	Clone the project:
-{git clone https://github.com/20206905/Coursework.git}
+```git clone https://github.com/20206905/Coursework.git```
 2)	Enter the directory: 
 *cd Coursework*
 3)	Install the node modules:
