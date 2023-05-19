@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <p>Logged in as: <span id="username"></span></p>
+    <a href="www.bbc.co.uk">stream</a>
+
+    <script>
+      const link = document.querySelector("a");
+      const href = link.getAttribute("href");
+
+      // Make an AJAX request to retrieve the user's name from the server
+      fetch("/get-username")
+        .then((response) => response.json())
+        .then((data) => {
+          // Set the text of the placeholder element to the user's name
+          document.getElementById("username").textContent = data.user.name;
+
+          console.log("data.username = " + data.user._id);
+          let temp = data.user._id;
+          console.log("temp = " + temp);
+          link.setAttribute("href", temp + ".html");
+        })
+        .catch((error) => console.error(error));
+    </script>
+  </body>
+</html>

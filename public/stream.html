@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div class="container">
+      <video id="localVideo" autoplay playsinline controls="false" />
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      //---------------------------------------------------------------------------
+      // Local playback.
+
+      async function playVideoFromCamera() {
+        try {
+          const constraints = { video: true, audio: true };
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          const videoElement = document.querySelector("video#localVideo");
+          videoElement.srcObject = stream;
+        } catch (error) {
+          console.error("Error opening video camera.", error);
+        }
+      }
+
+      //---------------------------------------------------------------------------
+      // Get URL and ID.
+
+      let url = window.location.href;
+
+      let urlId = url.slice(22, 46);
+
+      //---------------------------------------------------------------------------
+      // Make an AJAX request to retrieve the user's session from the server.
+
+      fetch("/get-username")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("data._id = " + data.user._id);
+
+          let userId = data.user._id;
+
+          if (urlId == userId) {
+            console.log("You are the streamer");
+            playVideoFromCamera();
+          } else {
+            console.log("You are a viewer.");
+          }
+        })
+        .catch((error) => console.error(error));
+
+      //----------------------------------------------------------------------------
+      // Socket.io.
+
+      var socket = io();
+
+      //---------------------------------------------------------------------------
+    </script>
+  </body>
+</html>
