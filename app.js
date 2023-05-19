@@ -165,7 +165,7 @@ app.post("/register.html", (req, res) => {
 
   registerUser();
 
-  res.send("Registered.");
+  res.redirect("index.html");
 });
 
 app.post("/login.html", async (req, res) => {
